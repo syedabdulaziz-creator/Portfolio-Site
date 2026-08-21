@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  ============================================================
+  HOW TO EDIT THIS SITE (read this first)
+  ============================================================
+  Every place you can safely change something is marked with
+  a comment starting with the word EDIT.
+
+  RULES TO STAY SAFE:
+  1. Only change TEXT, the words between > and < symbols.
+     Example: an h1 tag containing "Syed Abdul Aziz" -- you can
+     change the name itself, just don't touch the tags around it.
+  2. Never delete a less-than or greater-than symbol, or a quote mark.
+  3. If you break something, just re-download the original
+     file and start again. Nothing is permanent until you
+     upload it to GitHub.
+  4. After editing, open the file in a browser (double-click it)
+     to preview before uploading to GitHub Pages.
+
+  SECTIONS IN THIS FILE, IN ORDER (use Ctrl+F / Cmd+F to jump):
+  - TERMINAL COMMANDS   (what typing "about" etc. shows)
+  - NAME + TITLE         (your name and degree line)
+  - ABOUT SECTION
+  - SKILLS SECTION
+  - PROJECTS SECTION
+  - LEARNING SECTION
+  - CONTACT SECTION
+  ============================================================
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syed Abdul Aziz — Notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF6EC;
+    --paper-2: #F3EEDF;
+    --rule: #C3D2E8;
+    --margin: #DE9A9A;
+    --ink: #2B2A28;
+    --ink-soft: #5B5850;
+    --terminal-bg: #1B211D;
+    --terminal-bg-2: #222A25;
+    --terminal-green: #86E2AE;
+    --terminal-dim: #4E6A5B;
+    --highlight: #F4C95D;
+    --highlight-soft: #FBE7B8;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--highlight-soft); }
+
+  a { color: var(--ink); }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+    position: relative;
+  }
+
+  /* Notebook margin line running down the whole page */
+  .page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 64px;
+    width: 1px;
+    background: var(--margin);
+    opacity: 0.55;
+    z-index: 0;
+  }
+  @media (max-width: 640px) { .page::before { display: none; } }
+
+  /* ===== TERMINAL HERO ===== */
+  .terminal-wrap {
+    margin: 40px 0 0;
+    border-radius: 10px;
+    background: var(--terminal-bg);
+    box-shadow: 0 18px 40px -20px rgba(20, 24, 20, 0.5);
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    background: var(--terminal-bg-2);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; opacity: 0.85; }
+  .dot.red { background: #E5716A; }
+  .dot.yellow { background: #E5C36A; }
+  .dot.green { background: #6ACF8D; }
+  .terminal-title {
+    margin-left: 8px;
+    color: var(--terminal-dim);
+    font-size: 12.5px;
+  }
+  .terminal-body {
+    padding: 22px 20px 24px;
+    color: var(--terminal-green);
+    min-height: 210px;
+  }
+  .terminal-line { white-space: pre-wrap; word-break: break-word; }
+  .prompt-symbol { color: var(--terminal-dim); }
+  .terminal-out { color: #C9E9D4; }
+  .terminal-out .path { color: var(--highlight); }
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background: var(--terminal-green);
+    vertical-align: -2px;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .terminal-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .terminal-input-row .prompt-symbol { flex-shrink: 0; }
+  #cmd-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--terminal-green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    flex: 1;
+    caret-color: var(--terminal-green);
+  }
+  #cmd-input::placeholder { color: var(--terminal-dim); }
+  .terminal-hint {
+    color: var(--terminal-dim);
+    font-size: 12px;
+    padding: 0 20px 16px;
+    margin-top: -6px;
+  }
+
+  /* ===== NOTEBOOK SECTIONS ===== */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 46px 0 46px 40px;
+  }
+  @media (max-width: 640px) { section { padding-left: 0; } }
+
+  section + section {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 27px,
+      var(--rule) 28px
+    );
+    background-position: 0 0;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    padding: 3px 9px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+
+  h2.section-title {
+    font-family: 'Kalam', cursive;
+    font-weight: 700;
+    font-size: 34px;
+    margin: 0 0 18px;
+    color: var(--ink);
+    display: inline-block;
+    position: relative;
+  }
+  h2.section-title::after {
+    content: "";
+    position: absolute;
+    left: -2px;
+    right: -6px;
+    bottom: 3px;
+    height: 10px;
+    background: var(--highlight-soft);
+    z-index: -1;
+    transform: skewX(-6deg);
+  }
+
+  p.lead { max-width: 560px; color: var(--ink); }
+  p.muted { color: var(--ink-soft); }
+
+  .name-block h1 {
+    font-family: 'Kalam', cursive;
+    font-weight: 700;
+    font-size: 46px;
+    margin: 30px 0 4px;
+  }
+  .name-block .role {
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  /* Skills as index-card chips */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 8px;
+  }
+  .skill-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--highlight);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 2px 3px 0 rgba(43,42,40,0.04);
+  }
+  .skill-card .k {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .skill-card .v { color: var(--ink); font-size: 14px; }
+
+  /* Projects as taped index cards */
+  .project-card {
+    background: #FFFDF6;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: 3px 4px 0 rgba(43,42,40,0.05);
+  }
+  .project-card::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 24px;
+    width: 46px;
+    height: 16px;
+    background: rgba(244, 201, 93, 0.55);
+    transform: rotate(-2deg);
+    border-radius: 2px;
+  }
+  .project-card h3 {
+    font-family: 'Kalam', cursive;
+    font-size: 21px;
+    margin: 4px 0 4px;
+  }
+  .project-card .stack {
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    margin-bottom: 10px;
+  }
+  .project-card ul { margin: 10px 0 12px; padding-left: 20px; }
+  .project-card li { margin-bottom: 6px; }
+  .project-links a {
+    font-size: 13px;
+    text-decoration: none;
+    border-bottom: 1px dashed var(--ink-soft);
+    margin-right: 16px;
+  }
+  .project-links a:hover { border-bottom-style: solid; }
+
+  /* Learning list */
+  .learning-list { list-style: none; padding: 0; margin: 0; }
+  .learning-list li {
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--rule);
+    display: flex;
+    gap: 10px;
+  }
+  .learning-list li:last-child { border-bottom: none; }
+  .learning-list .marker { color: var(--highlight); }
+
+  /* Contact */
+  .contact-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+  .contact-links a {
+    text-decoration: none;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    padding: 9px 14px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    color: var(--ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .contact-links a:hover {
+    transform: translateY(-2px);
+    box-shadow: 2px 3px 0 rgba(43,42,40,0.08);
+  }
+
+  footer {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 12px;
+    padding: 30px 0 10px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .cursor { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HERO / TERMINAL -->
+  <div class="terminal-wrap" id="hero">
+    <div class="terminal-bar">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <span class="terminal-title">syed@mjcet: ~/portfolio</span>
+    </div>
+    <div class="terminal-body" id="terminal-body" aria-live="polite"></div>
+    <div class="terminal-input-row">
+      <span class="prompt-symbol">syed@mjcet:~$</span>
+      <input id="cmd-input" type="text" autocomplete="off" spellcheck="false" placeholder="type 'help' and press enter" aria-label="Terminal command input">
+    </div>
+    <div class="terminal-hint">try: about · skills · projects · learning · contact · clear</div>
+  </div>
+
+  <!-- ===== NAME + TITLE ===== -->
+  <div class="name-block">
+    <span class="tag"><!-- EDIT: the little label above your name --> first-year · CSE</span>
+    <h1><!-- EDIT: your name -->Syed Abdul Aziz</h1>
+    <div class="role"><!-- EDIT: your degree/college line -->B.Tech Computer Science Engineering, MJCET Hyderabad</div>
+  </div>
+
+  <!-- ===== ABOUT SECTION ===== -->
+  <section id="about">
+    <h2 class="section-title">About</h2>
+    <!-- EDIT: your bio, 2-3 sentences -->
+    <p class="lead">First-year CS student learning to build things properly rather than just knowing the theory. Currently working through C++ fundamentals, Git/GitHub, and the basics of web development — this site and the project below are both part of that process, not a finished résumé of skills.</p>
+    <!-- EDIT: second line, e.g. location and interests -->
+    <p class="muted">Based in Hyderabad, India. Interested in web and mobile development.</p>
+  </section>
+
+  <!-- ===== SKILLS SECTION =====
+       To add a new skill card, copy one whole <div class="skill-card">...</div>
+       block and paste it right below an existing one, then edit its text. -->
+  <section id="skills">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card"><div class="k"><!-- EDIT: card label -->Languages</div><div class="v"><!-- EDIT: card content -->C++, HTML, CSS</div></div>
+      <div class="skill-card"><div class="k">Tools</div><div class="v">Git, GitHub, GitHub Pages, VS Code</div></div>
+      <div class="skill-card"><div class="k">Practical focus</div><div class="v">CRUD logic, file handling, debugging</div></div>
+      <div class="skill-card"><div class="k">Learning now</div><div class="v">DSA, competitive programming, AI engineering</div></div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS SECTION =====
+       To add a new project: copy one whole <div class="project-card">...</div>
+       block (from the opening <div class="project-card"> to its closing </div>)
+       and paste it below, then edit the title, stack line, bullet points, and link. -->
+  <section id="projects">
+    <h2 class="section-title">Projects</h2>
+
+    <div class="project-card">
+      <h3><!-- EDIT: project name -->Student Record Management System</h3>
+      <div class="stack"><!-- EDIT: tech used, separated by · -->C++ · file I/O · CLI application</div>
+      <ul>
+        <!-- EDIT: bullet points describing the project. Add or remove <li> lines freely. -->
+        <li>Command-line CRUD app to create, update, search, and delete student records.</li>
+        <li>File-based persistence so data survives across program runs, plus input validation.</li>
+        <li>Sorting and automated grade computation across multiple record fields.</li>
+      </ul>
+      <div class="project-links">
+        <!-- EDIT: link — change the URL inside href="..." -->
+        <a href="https://github.com/syedabdulaziz-creator" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <h3>This Portfolio Site</h3>
+      <div class="stack">HTML · CSS · JavaScript · GitHub Pages</div>
+      <ul>
+        <li>Notebook-and-terminal themed personal site, hand-built and deployed via GitHub Pages.</li>
+        <li>Interactive terminal in the hero section responds to typed commands.</li>
+      </ul>
+      <div class="project-links">
+        <a href="https://syedabdulaziz-creator.github.io" target="_blank" rel="noopener">View live site →</a>
+      </div>
+    </div>
+
+    <!-- To add a THIRD project, paste a new copy of a project-card block right here. -->
+  </section>
+
+  <!-- ===== LEARNING SECTION =====
+       To add a new line, copy one whole <li>...</li> and edit its text. -->
+  <section id="learning">
+    <h2 class="section-title">Currently Learning</h2>
+    <ul class="learning-list">
+      <li><span class="marker">›</span> C++ fundamentals and Data Structures &amp; Algorithms</li>
+      <li><span class="marker">›</span> Competitive programming on Codeforces / LeetCode</li>
+      <li><span class="marker">›</span> AI engineering — building with LLM APIs, agents, and tools (Claude API, Claude Code)</li>
+      <li><span class="marker">›</span> Full-stack web development, working toward system design fundamentals</li>
+    </ul>
+  </section>
+
+  <!-- ===== CONTACT SECTION =====
+       To add a new link, copy one whole <a>...</a> tag and edit the href and text. -->
+  <section id="contact">
+    <h2 class="section-title">Contact</h2>
+    <p class="muted">Open to internship opportunities — feel free to reach out.</p>
+    <div class="contact-links">
+      <!-- EDIT: replace the email address after mailto: -->
+      <a href="mailto:syedabdulaziz025@gmail.com">✉ Email</a>
+      <a href="https://github.com/syedabdulaziz-creator" target="_blank" rel="noopener">⌥ GitHub</a>
+      <a href="https://www.linkedin.com/in/syed-abdul-aziz-191b19300" target="_blank" rel="noopener">in LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>built from scratch, one command at a time.</footer>
+</div>
+
+<script>
+(function () {
+  var body = document.getElementById('terminal-body');
+  var input = document.getElementById('cmd-input');
+
+  // ===== TERMINAL COMMANDS =====
+  // This is what the terminal says when you type each word and hit Enter.
+  // To edit: change the text inside the quotes " " on the right of each colon.
+  // To add a NEW command: copy a whole line like   word: "response text",
+  // and paste it in this list, then change "word" and the response text.
+  var responses = {
+    help: "commands: about, skills, projects, learning, contact, clear",
+    about: "Syed Abdul Aziz — first-year CSE @ MJCET, Hyderabad. Learning to build, not just study.",
+    skills: "C++, HTML, CSS, Git, GitHub — scroll to Skills for the full breakdown.",
+    projects: "1) Student Record Management System (C++)  2) This site. Scroll to Projects →",
+    learning: "C++/DSA, competitive programming, AI engineering with LLM APIs, and full-stack dev toward system design.",
+    contact: "syedabdulaziz025@gmail.com — links are in the Contact section below.",
+    whoami: "syed — first-year CS student, Hyderabad, India.",
+    ls: "about.txt  skills.txt  projects/  learning.txt  contact.txt"
+  };
+
+  function printLine(text, cls) {
+    var div = document.createElement('div');
+    div.className = 'terminal-line' + (cls ? ' ' + cls : '');
+    div.textContent = text;
+    body.appendChild(div);
+  }
+
+  function printPrompt(cmd) {
+    var div = document.createElement('div');
+    div.className = 'terminal-line';
+    div.innerHTML = '<span class="prompt-symbol">syed@mjcet:~$</span> ' + cmd;
+    body.appendChild(div);
+  }
+
+  function scrollToSection(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      setTimeout(function () {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 250);
+    }
+  }
+
+  function typeIntro() {
+    var lines = [
+      { text: "$ whoami", delay: 0, cls: null, isPrompt: true },
+      { text: "syed — first-year CSE student @ MJCET, Hyderabad.", delay: 550, cls: 'terminal-out' },
+      { text: "$ cat status.txt", delay: 1100, isPrompt: true },
+      { text: "learning C++, building projects, open to internships.", delay: 1650, cls: 'terminal-out' }
+    ];
+    lines.forEach(function (line) {
+      setTimeout(function () {
+        if (line.isPrompt) {
+          var div = document.createElement('div');
+          div.className = 'terminal-line';
+          div.innerHTML = '<span class="prompt-symbol">syed@mjcet:~$</span> ' + line.text.replace(/^\$ /, '');
+          body.appendChild(div);
+        } else {
+          printLine(line.text, line.cls);
+        }
+      }, line.delay);
+    });
+  }
+
+  typeIntro();
+
+  input.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    var raw = input.value.trim();
+    if (!raw) return;
+    var cmd = raw.toLowerCase();
+
+    printPrompt(raw);
+
+    if (cmd === 'clear') {
+      body.innerHTML = '';
+    } else if (responses[cmd]) {
+      printLine(responses[cmd], 'terminal-out');
+      if (['about','skills','projects','learning','contact'].indexOf(cmd) !== -1) {
+        scrollToSection(cmd);
+      }
+    } else {
+      printLine('command not found: ' + raw + ' — type "help"', 'terminal-out');
+    }
+
+    input.value = '';
+    body.scrollTop = body.scrollHeight;
+  });
+
+  document.getElementById('hero').addEventListener('click', function () {
+    input.focus();
+  });
+})();
+</script>
+
+</body>
+</html>
